@@ -1,0 +1,16 @@
+﻿[
+	{id: "user", text: "数据管理"},
+		
+	{id: "lists", text: "资源数据", pid: "user" },
+			
+	{id: "001", text: "CHIS_CHARTMSG", pid: "lists"},
+	{id: "002", text: "USER_COL_COMMENTS" , pid: "lists"},
+	{id: "003", text: "USER_LOGIN " , pid: "lists"},
+	{id: "004", text: "LOC " , pid: "lists"},
+
+
+
+					
+]
+
+

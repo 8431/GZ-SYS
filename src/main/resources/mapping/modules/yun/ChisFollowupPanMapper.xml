@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.ChisFollowupPanMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.gzsys.modules.yun.entity.ChisFollowupPan" >
+        <id column="GUID" property="guid" jdbcType="VARCHAR" />
+        <result column="ORG" property="org" jdbcType="VARCHAR" />
+        <result column="DOCGUID" property="docguid" jdbcType="VARCHAR" />
+        <result column="USRGUID" property="usrguid" jdbcType="VARCHAR" />
+        <result column="SICGUID" property="sicguid" jdbcType="VARCHAR" />
+        <result column="FOLLOWOPTION" property="followoption" jdbcType="VARCHAR" />
+        <result column="FOLLOWDATETIME" property="followdatetime" jdbcType="OTHER" />
+        <result column="FOLLOWSTATE" property="followstate" jdbcType="VARCHAR" />
+        <result column="CRTUSR" property="crtusr" jdbcType="VARCHAR" />
+        <result column="CRTDAT" property="crtdat" jdbcType="TIMESTAMP" />
+        <result column="UPDATEUSR" property="updateusr" jdbcType="VARCHAR" />
+        <result column="UPDATEDATE" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        GUID, ORG, DOCGUID, USRGUID, SICGUID, FOLLOWOPTION, FOLLOWDATETIME, FOLLOWSTATE,
+        CRTUSR, CRTDAT, UPDATEUSR, UPDATEDATE
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.gzsys.modules.yun.entity.ChisFollowupPan" >
+        insert into CHIS_FOLLOWUP_PLAN
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="guid != null" >
+                GUID,
+            </if>
+            <if test="org != null" >
+                ORG,
+            </if>
+            <if test="docguid != null" >
+                DOCGUID,
+            </if>
+            <if test="usrguid != null" >
+                USRGUID,
+            </if>
+            <if test="sicguid != null" >
+                SICGUID,
+            </if>
+            <if test="followoption != null" >
+                FOLLOWOPTION,
+            </if>
+            <if test="followdatetime != null" >
+                FOLLOWDATETIME,
+            </if>
+            <if test="followstate != null" >
+                FOLLOWSTATE,
+            </if>
+            <if test="crtusr != null" >
+                CRTUSR,
+            </if>
+            <if test="crtdat != null" >
+                CRTDAT,
+            </if>
+            <if test="updateusr != null" >
+                UPDATEUSR,
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="guid != null" >
+                #{guid,jdbcType=VARCHAR},
+            </if>
+            <if test="org != null" >
+                #{org,jdbcType=VARCHAR},
+            </if>
+            <if test="docguid != null" >
+                #{docguid,jdbcType=VARCHAR},
+            </if>
+            <if test="usrguid != null" >
+                #{usrguid,jdbcType=VARCHAR},
+            </if>
+            <if test="sicguid != null" >
+                #{sicguid,jdbcType=VARCHAR},
+            </if>
+            <if test="followoption != null" >
+                #{followoption,jdbcType=VARCHAR},
+            </if>
+            <if test="followdatetime != null" >
+                #{followdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="followstate != null" >
+                #{followstate,jdbcType=VARCHAR},
+            </if>
+            <if test="crtusr != null" >
+                #{crtusr,jdbcType=VARCHAR},
+            </if>
+            <if test="crtdat != null" >
+                #{crtdat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateusr != null" >
+                #{updateusr,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.gzsys.modules.yun.entity.ChisFollowupPan" >
+        update CHIS_FOLLOWUP_PLAN
+        <set >
+            <if test="org != null" >
+                ORG = #{org,jdbcType=VARCHAR},
+            </if>
+            <if test="docguid != null" >
+                DOCGUID = #{docguid,jdbcType=VARCHAR},
+            </if>
+            <if test="usrguid != null" >
+                USRGUID = #{usrguid,jdbcType=VARCHAR},
+            </if>
+            <if test="sicguid != null" >
+                SICGUID = #{sicguid,jdbcType=VARCHAR},
+            </if>
+            <if test="followoption != null" >
+                FOLLOWOPTION = #{followoption,jdbcType=VARCHAR},
+            </if>
+            <if test="followdatetime != null" >
+                FOLLOWDATETIME = #{followdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="followstate != null" >
+                FOLLOWSTATE = #{followstate,jdbcType=VARCHAR},
+            </if>
+            <if test="crtusr != null" >
+                CRTUSR = #{crtusr,jdbcType=VARCHAR},
+            </if>
+            <if test="crtdat != null" >
+                CRTDAT = #{crtdat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateusr != null" >
+                UPDATEUSR = #{updateusr,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedate != null" >
+                UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where GUID = #{guid,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectDTfollowupPlanList" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from CHIS_FOLLOWUP_PLAN
+        where SICGUID = #{sickguid,jdbcType=VARCHAR} AND STATUS='1'
+
+    </select>
+
+    <delete id="deleteByFollowupPlan" parameterType="java.lang.String">
+        delete from CHIS_FOLLOWUP_PLAN
+        where SICGUID = #{sickguid,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

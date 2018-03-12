@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.ChisChartMsgMapper">
+
+    <resultMap id="BaseResultMap" type="com.gzsys.modules.yun.entity.ChisChartMsg">
+        <id column="GUID" jdbcType="CHAR" property="guid" />
+        <result column="ORG" jdbcType="VARCHAR" property="org" />
+        <result column="USRID" jdbcType="VARCHAR" property="usrid" />
+        <result column="USRNAM" jdbcType="VARCHAR" property="usrnam" />
+        <result column="CRTDAT" jdbcType="TIMESTAMP" property="crtdat" />
+        <result column="TOUSR" jdbcType="VARCHAR" property="tousr" />
+        <result column="TONAME" jdbcType="VARCHAR" property="toname" />
+        <result column="TYPE" jdbcType="VARCHAR" property="type" />
+        <result column="FLG" jdbcType="VARCHAR" property="flg" />
+        <result column="MSG" jdbcType="OTHER" property="msg" />
+        <result column="USRIMG" jdbcType="VARCHAR" property="usrimg" />
+        <result column="IMGFILE" jdbcType="VARCHAR" property="imgfile" />
+        <result column="AUDIOFILE" jdbcType="VARCHAR" property="audiofile" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        GUID, ORG, USRID, USRNAM, CRTDAT, TOUSR, TONAME, TYPE, FLG, MSG, USRIMG, IMGFILE,
+        AUDIOFILE
+    </sql>
+
+
+</mapper>

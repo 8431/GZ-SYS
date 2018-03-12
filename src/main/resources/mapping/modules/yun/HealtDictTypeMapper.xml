@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.HealtDictTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.gzsys.modules.yun.entity.HealtDictType">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+    <result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+    <result column="DICT_TYPE_NAME" jdbcType="VARCHAR" property="dictTypeName" />
+    <result column="DICT_TYPE_RANK" jdbcType="DECIMAL" property="dictTypeRank" />
+    <result column="DICT_TYPE_CODE" jdbcType="VARCHAR" property="dictTypeCode" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="DICT_TYPE_SORT_NO" jdbcType="DECIMAL" property="dictTypeSortNo" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, PARENT_ID, APP_ID, DICT_TYPE_NAME, DICT_TYPE_RANK, DICT_TYPE_CODE, CREATE_TIME,
+    CREATE_NAME, UPDATE_TIME, UPDATE_NAME, STATE, DICT_TYPE_SORT_NO
+  </sql>
+
+
+</mapper>

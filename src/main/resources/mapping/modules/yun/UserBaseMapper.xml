@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.UserBaseMapper">
+
+  <resultMap id="BaseResultMap" type="com.gzsys.modules.yun.entity.UserBase">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="USER_ROLE" jdbcType="VARCHAR" property="userRole" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="FACE" jdbcType="VARCHAR" property="face" />
+    <result column="FACE200" jdbcType="VARCHAR" property="face200" />
+    <result column="SRCFACE" jdbcType="VARCHAR" property="srcface" />
+    <result column="MEDICAL_CARD" jdbcType="VARCHAR" property="medicalCard" />
+    <result column="REFERRAL_CODE" jdbcType="VARCHAR" property="referralCode" />
+    <result column="BEGOOD" jdbcType="VARCHAR" property="begood" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
+    <result column="HOSPITAL" jdbcType="VARCHAR" property="hospital" />
+    <result column="SIGNATURE" jdbcType="VARCHAR" property="signature" />
+    <result column="IN_POST" jdbcType="VARCHAR" property="inPost" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, USER_ROLE, USER_NAME, GENDER, BIRTHDAY, ID_CARD, MOBILE, EMAIL, FACE, FACE200,
+    SRCFACE, MEDICAL_CARD, REFERRAL_CODE, BEGOOD, TITLE, DEPARTMENT, HOSPITAL, SIGNATURE,
+    IN_POST, CREATE_TIME, CREATE_NAME, UPDATE_TIME, UPDATE_NAME, STATE
+  </sql>
+  
+  <!-- 查询医生列表 -->
+  <select id="queryPageDoctorList" parameterType="com.gzsys.modules.yun.request.UserBaseRequest" resultMap="BaseResultMap">
+  	select  a.ID, a.USER_NAME, a.GENDER, a.BIRTHDAY, a.ID_CARD, a.MOBILE, a.EMAIL, a.FACE, a.FACE200,
+    a.SRCFACE, a.MEDICAL_CARD, a.REFERRAL_CODE, a.BEGOOD, a.HOSPITAL, a.SIGNATURE, 
+    case when ROUND(TO_NUMBER(sysdate - a.LAST_INLINE_TIME) * 24 * 60 * 60)&lt;5 then '1' when in_post='2' then '2' else '0' end as in_post,
+    d1.DICT_ENTRY_NAME department,d2.DICT_ENTRY_NAME title
+	from user_base a
+	left join user_login b on a.id=b.id and b.user_type='2' and a.user_role='2'
+	left join HEALTH_DICT_TYPE c1 on c1.DICT_TYPE_CODE='000001'
+	left join HEALTH_DICT_ENTRY d1 on d1.DICT_TYPE_ID=c1.id and a.department=d1.DICT_ENTRY_CODE
+	left join HEALTH_DICT_TYPE c2 on c2.DICT_TYPE_CODE='000002'
+	left join HEALTH_DICT_ENTRY d2 on d2.DICT_TYPE_ID=c2.id and a.department=d2.DICT_ENTRY_CODE
+	where 1=1 and a.state='1'
+	<if test="id != null and id != ''">
+       and a.id=#{id,jdbcType=VARCHAR}
+    </if>
+	<if test="title != null and title != ''">
+       and a.title=#{title,jdbcType=VARCHAR}
+    </if>
+    <if test="department != null and department != ''">
+       and a.department=#{department,jdbcType=VARCHAR}
+    </if>
+    <if test="inPost != null and inPost != ''">
+       and in_post=#{inPost,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+  <resultMap id="DoctorInformationMap" type="java.util.HashMap">
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_ROLE" jdbcType="VARCHAR" property="userRole" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="FACE" jdbcType="VARCHAR" property="face" />
+    <result column="FACE200" jdbcType="VARCHAR" property="face200" />
+    <result column="SRCFACE" jdbcType="VARCHAR" property="srcface" />
+    <result column="MEDICAL_CARD" jdbcType="VARCHAR" property="medicalCard" />
+    <result column="REFERRAL_CODE" jdbcType="VARCHAR" property="referralCode" />
+    <result column="BEGOOD" jdbcType="VARCHAR" property="begood" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
+    <result column="HOSPITAL" jdbcType="VARCHAR" property="hospital" />
+    <result column="SIGNATURE" jdbcType="VARCHAR" property="signature" />
+    <result column="IN_POST" jdbcType="VARCHAR" property="inPost" />
+    <!--UserLogin-->
+    <result column="IDENTITY_TYPE" jdbcType="VARCHAR" property="identityType" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="IDENTIFIER" jdbcType="VARCHAR" property="identifier" />
+    <result column="CERTIFICATE" jdbcType="VARCHAR" property="certificate" />
+  </resultMap>
+
+  <!--查询医生信息列表-->
+  <select id="queryPageDoctorInformationList" resultType="com.gzsys.modules.yun.request.DoctorRequest">
+    select base.id as USER_ID,base.USER_ROLE,base.USER_NAME,base.GENDER,base.BIRTHDAY,base.ID_CARD,base.MOBILE,base.EMAIL,base.FACE200,base.SRCFACE,base.MEDICAL_CARD
+    ,base.REFERRAL_CODE,base.BEGOOD,base.TITLE,base.DEPARTMENT,base.HOSPITAL,base.SIGNATURE,base.IN_POST,
+    logs.IDENTITY_TYPE,logs.USER_TYPE,logs.IDENTIFIER,logs.CERTIFICATE from USER_LOGIN logs
+      LEFT JOIN USER_BASE base on logs.id=BASE.ID where LOGS.STATE='1' and BASE.STATE='1'
+      <if test="userName != null and userName != ''">
+        and base.USER_NAME like '${'%'+ userName +'%'}'
+      </if>
+      <if test="inPost != null and inPost != ''">
+        and base.IN_POST = #{inPost,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null and title != ''">
+        and base.title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="department != null and department != ''">
+        and base.department = #{department,jdbcType=VARCHAR}
+      </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,88 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8080
+    connection-timeout: 5000
+    context-path: /gz-sys
+# datasource
+spring:
+    # 环境 dev|test|pro
+    profiles:
+        active: dev
+    # jackson时间格式化
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    thymeleaf:
+       cache: false
+       prefix: classpath:/templates/
+       suffix: .html
+       mode: LEGACYHTML5
+       encoding: UTF-8
+       content-type: text/html
+       check-template: false
+       enabled: false
+    http:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+            enabled: true
+    resources: # 指定静态资源的路径
+       static-locations: classpath:/static/,classpath:/views/
+    mvc:
+      view:
+        prefix: /WEB-INF/
+        suffix: .jsp
+    redis:
+        host: 106.14.207.179
+        port: 16379
+        password:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 10000
+# Mybatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath:/mapping/**/*.xml
+  typeAliasesPackage: com.gzsys.modules.*.entity
+#  global-config:
+#    id-type: 2
+#    field-strategy: 2
+#    db-column-underline: true
+#    refresh-mapper: true
+#    #capital-mode: true
+#    #key-generator: com.baomidou.springboot.xxx
+#    logic-delete-value: 0
+#    logic-not-delete-value: 1
+#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+#    #meta-object-handler: com.baomidou.springboot.xxx
+#    #sql-injector: com.baomidou.springboot.xxx
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
+  global-config:
+    id-type: 3  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
+    db-column-underline: false
+    refresh-mapper: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+#logging
+logging:
+  level: warn
+#ftp配置
+ftp:
+  ip: 106.14.139.5
+  port: 11221
+  user: gzyy
+  pass: gzyy2017
+  filePath: xuhuiyun
+  orderfilePath: /healthmanage/doctor/order/
+  allfilePath: /wwwSource/

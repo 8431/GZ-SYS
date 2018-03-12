@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.DiagnosisRecordsMapper">
+
+    <!-- 根据主键删除 -->
+    <delete id="deleteOK" parameterType="java.lang.String">
+        DELETE DIAGNOSIS_RECORDS
+        where SID = #{sid,jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 新增对象(部分字段) -->
+    <insert id="insertSelective" parameterType="com.gzsys.modules.yun.entity.DiagnosisRecords">
+        insert into DIAGNOSIS_RECORDS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="zid != null and zid != ''">
+                ZID,
+            </if>
+            <if test="zname != null and zname != ''">
+                ZNAME,
+            </if>
+            <if test="sid != null and sid != ''">
+                SID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="zid != null and zid != ''">
+                #{zid,jdbcType=VARCHAR},
+            </if>
+            <if test="zname != null and zname != ''">
+                #{zname,jdbcType=VARCHAR},
+            </if>
+            <if test="sid != null and sid != ''">
+                #{sid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

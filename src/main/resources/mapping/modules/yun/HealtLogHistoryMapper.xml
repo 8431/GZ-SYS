@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzsys.modules.yun.mapper.HealtLogHistoryMapper">
+
+	<resultMap id="BaseResultMap" type="com.gzsys.modules.yun.entity.HealtLogHistory">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="APP_ID" jdbcType="VARCHAR" property="appId" />
+		<result column="LOG_LEVEL" jdbcType="VARCHAR" property="logLevel" />
+		<result column="LOG_TYPE" jdbcType="VARCHAR" property="logType" />
+		<result column="LOG_OBJECT" jdbcType="VARCHAR" property="logObject" />
+		<result column="LOG_METHOD" jdbcType="VARCHAR" property="logMethod" />
+		<result column="LOG_OP" jdbcType="VARCHAR" property="logOp" />
+		<result column="LOG_IP" jdbcType="VARCHAR" property="logIp" />
+		<result column="LOG_MESSAGE_DESC" jdbcType="VARCHAR" property="logMessageDesc" />
+		<result column="LOG_OPERATION" jdbcType="VARCHAR" property="logOperation" />
+		<result column="LOG_EXCEPTION" jdbcType="VARCHAR" property="logException" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="CREATE_NAME" jdbcType="VARCHAR" property="createName" />
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName" />
+		<result column="STATE" jdbcType="VARCHAR" property="state" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, APP_ID, LOG_LEVEL, LOG_TYPE, LOG_OBJECT, LOG_METHOD,
+		LOG_OP, LOG_IP,
+		LOG_MESSAGE_DESC,
+		LOG_OPERATION, LOG_EXCEPTION,
+		CREATE_TIME, CREATE_NAME, UPDATE_TIME, UPDATE_NAME,
+		STATE
+	</sql>
+
+	<select id="countByAuthCode" parameterType="com.gzsys.modules.yun.entity.HealtLogHistory"
+		resultType="java.lang.Integer">
+		select count(*) from HEALTH_LOG_HISTORY a
+		<where>
+			<if test="logLevel != null ">
+				a.LOG_LEVEL = #{logLevel,jdbcType=VARCHAR}
+			</if>
+			<if test="logType != null  ">
+				and a.LOG_TYPE = #{logType,jdbcType=VARCHAR}
+			</if>
+			<if test="logOp != null  ">
+				and a.LOG_OP = #{logOp,jdbcType=VARCHAR}
+			</if>
+			and a.STATE='1'
+			and  <![CDATA[ a.CREATE_TIME>=trunc(sysdate)]]>
+		</where>
+	</select>
+
+	<select id="countByPassword" parameterType="com.gzsys.modules.yun.entity.HealtLogHistory"
+		resultType="java.lang.Integer">
+		select count(*) from HEALTH_LOG_HISTORY a
+		<where>
+			<if test="logLevel != null ">
+				a.LOG_LEVEL = #{logLevel,jdbcType=VARCHAR}
+			</if>
+			<if test="logType != null  ">
+				and a.LOG_TYPE = #{logType,jdbcType=VARCHAR}
+			</if>
+			<if test="logOp != null  ">
+				and a.LOG_OP = #{logOp,jdbcType=VARCHAR}
+			</if>
+			and a.STATE='1'
+			and  <![CDATA[ sysdate-1/24 <= a.CREATE_TIME]]>
+		</where>
+	</select>
+</mapper>
